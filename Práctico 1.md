@@ -23,7 +23,10 @@ H0: el número de gatos que se atiende en la clínica es igual al número de per
 
 H1: el número de gatos que se atiende en la clínica es distinto al número de perros.
 
-`## Crear un vector con los valores de perros y gatos`
-`data1 = c(25,87)`
-`chisq.test(data1)`
+```
+## Crear un vector con los valores de perros y gatos
+data1 = c(25,87)
+chisq.test(data1)
+```
+
  

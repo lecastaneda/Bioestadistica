@@ -29,4 +29,6 @@ data1 = c(25,87)
 chisq.test(data1)
 ```
 
+¿Aceptamos o rechazamos la hipótesis nula?
+
  

@@ -1,0 +1,3 @@
+# Introducción a R.
+
+# En esta sección haremos una breve introducción al programa R. R es una herramienta gratuita, desarrollada por una diversidad de personas provenientes de todo el mundo

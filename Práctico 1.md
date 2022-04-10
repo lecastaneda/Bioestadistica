@@ -11,7 +11,7 @@ En este práctico realizaremos diversos análisis de frecuencias en R. Primero, 
 3. Análisis de riesgo (odd ratio).
 
 ---
-# 1. Prueba de bondad de ajuste.
+## 1. Prueba de bondad de ajuste.
 
 Las pruebas de bondad de ajuste permiten evaluar si una variable categórica se distribuye de una manera específica o no.
 

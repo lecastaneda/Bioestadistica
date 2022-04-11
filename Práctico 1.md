@@ -7,7 +7,7 @@ En este práctico realizaremos diversos análisis de frecuencias en R. Primero, 
 ## Contenido
 
 1. [Prueba de bondad de ajuste](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico%201.md#1-prueba-de-bondad-de-ajuste)
-2. Tablas de contingencia.
+2. [Tablas de contingencia](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico%201.md#1-)
 3. Análisis de riesgo (odd ratio).
 
 ---
@@ -124,4 +124,37 @@ test2
 test2$expected
 ```
 
+---
+## 2. Tablas de contingencia
+
+Las tablas de contingenciapermiten evaluar si la distribución de frecuencias en múltiples categorías se distribuyen de forma independientre entre las distintas categorías. Por ejemplo, si tenemos una tabla de contingencia de i columnas y j filas, las tablas de contingencia permiten evaluar si los valores de frecuencias son independientes entre filas y columnas.
+
+--
+### Ejemplo 1
+
+   ![Ejemplo3](https://github.com/lecastaneda/Bioestadistica/blob/main/Ejemplo3.png)
+   
+H0: Las frencuencias en las filas se distribuyen independiente respecto a las columas.
+
+H1: Las frencuencias en las filas se distribuyen se asocian a las columas.
+
+Descargar los datos contenidos en el archivo de texto [data3.txt](https://github.com/lecastaneda/Bioestadistica/blob/main/data3.txt)
+
+```
+## Cargar data3.txt
+data3 = read.table("data3.txt", header=T)
+head(data3)
+#
+## Calcular las proporciones
+prop.table(table(data3))
+#
+## Calcular los porcentajes
+prop.table(table(data3))*100
+#
+## Realizar la prueba de chi cuadrado (sin la corrección para bajas frecuencias de Yates)
+chisq.test(data3$Condicion, data3$Glicemia, correct=F)
+#
+## Calcular las frecuencias esperadas
+chisq.test(data3$Condicion, data3$Glicemia, correct=F)$expected
+```
 

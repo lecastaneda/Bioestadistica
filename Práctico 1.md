@@ -79,4 +79,49 @@ pie(data2, labels=arvejas, col=rainbow(length(arvejas)))
 
    ![Pie2](https://github.com/lecastaneda/Bioestadistica/blob/main/Pie2)
 
- 
+--
+### Ejemplo 3
+
+Vamos a simular una población de 100 individuos que se distribuyen de forma aleatoria en 3 genotipos: AA, Aa y aa. 
+
+Paso 1: Para esto primero vamos a crear 100 individuos con genotipo AA, 100 individuos con genotipo Aa, y 100 individuos con genotipo aa. 
+Paso 2: Luego muestreareamos 100 individuos de manera aleatoria para crear nuestra población.
+
+
+```
+n <- 100
+genotipos <- c(rep("AA",n),rep("Aa",n),rep("aa",n))   # Paso 1
+muestra <- sample(genotipos,100) # Paso 2
+frec.geno <- table(muestra)   # Calcular las frecuencias genotípicas
+```
+
+Paso 3: Crear un objeto con las frecuencias genotípicas de cada genotipo
+
+Paso 4: Calcular las frecuencias del alelo A (frecuencia p) y del alelo a (frecuencias q)
+
+```
+aa <- frec.geno[1]
+Aa <- frec.geno[2]
+AA <- frec.geno[3]
+p <- (2*aa+Aa)/(2*n) # frecuencia alelo a
+q <- (2*AA+Aa)/(2*n) # frecuencia alelo A
+```
+
+Paso 5: Calcular las frecuencias genotípicas esperadas según el Equilibrio de Hardy-Weinberg (p^2 + 2pq + q^2 = 1).
+
+```
+p2 <- p^2
+pq2 <- 2*p*q
+q2 <- q^2
+p2+pq2+q2    # Chequeo que debe sumar 1
+```
+
+Paso 6: Realizar la prueba de chi cuadrado con las proporciones esperadas según HWE.
+
+```
+test2 <- chisq.test(c(AA,Aa,aa), p=c(p2,pq2,q2))
+test2
+test2$expected
+```
+
+

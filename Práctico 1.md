@@ -175,3 +175,33 @@ ggplot(data=data3, aes(x=Glicemia, fill=Condicion))+ geom_bar(position="dodge") 
 ```
 
    ![Barras](https://github.com/lecastaneda/Bioestadistica/blob/main/Bar1.png)
+
+---
+## 3. Razón de posibilidades (odds ratio)
+
+Los odds ratio permiten evaluar la posibilidad de que un evento ocurra respecto a que ese evento no ocurra en una población.
+
+--
+### Ejemplo 1
+
+   ![Tabla1](https://github.com/lecastaneda/Bioestadistica/blob/main/Tabla1.png)
+
+¿Cuál es la posibilidad de sufrir una trombosis venosa en mujeres que consumen anticonceptivos orales respecto a las que no los consumen?
+
+```
+## Instalar el paquete epitools
+install.packages("epitools")
+library(espitools)
+#
+## Crear nombres para las columnas y filas
+coln <- c("Controles","Casos")
+rown <- c("Genotipo normal; ACO(-)","Genotipo normal; ACO(+)")
+#
+## Ingresar valores de frecuencias desde la tabla 1
+data4 <- matrix(c(127,35,41,52),2,2, byrow=T)
+#
+## Agregar nombres de columnas y filas a la matriz
+dimnames(data4) <- list("Caso-control"=coln, "Condición"=rown) 
+#
+## Realizar el análisis de odds ratio
+oddsratio(data4)

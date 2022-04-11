@@ -46,6 +46,7 @@ nombres = paste(nombres,pct,"%",sep=" ")  # Creamos un texto
 pie(data1, labels=nombres)
 ```
    ![Pie1](https://github.com/lecastaneda/Bioestadistica/blob/main/Pie1)
+
 --
 ### Ejemplo 2
 

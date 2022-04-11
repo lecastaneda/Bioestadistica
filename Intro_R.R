@@ -29,11 +29,11 @@ min(V3)
 max(V3)
 
 ## matrices
-matrix1 = matrix(,2,3, nrow=3)
+matrix1 = matrix(,2,3, nrow=TRUE)
 matrix2 = matrix(V3,2,3)
-matrix3 = matrix(V3,2,3, byrow=2)
+matrix3 = matrix(V3,2,3, byrow=TRUE)
 matrix4 = matrix(V3,3,2)
-matrix5 = matrix(V3,3,2, byrow=2)
+matrix5 = matrix(V3,3,2, byrow=TRUE)
 
 ## Data frames (estructuctura de datos tabulados en filas y columnas)
 data1 = data.frame(matrix3)

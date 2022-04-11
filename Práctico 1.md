@@ -179,7 +179,7 @@ ggplot(data=data3, aes(x=Glicemia, fill=Condicion))+ geom_bar(position="dodge") 
 ---
 ## 3. Razón de posibilidades (odds ratio)
 
-Los odds ratio permiten evaluar la posibilidad de que un evento ocurra respecto a que ese evento no ocurra en una población.
+Los odds ratio permiten evaluar la posibilidad de que un evento ocurra respecto a que ese evento no ocurra en una población dada una condición en particular.
 
 --
 ### Ejemplo 1

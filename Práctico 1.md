@@ -6,7 +6,7 @@ En este práctico realizaremos diversos análisis de frecuencias en R. Primero, 
 
 ## Contenido
 
-1. Prueba de bondad de ajuste.
+1. [Prueba de bondad de ajuste](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico%201.md#1-prueba-de-bondad-de-ajuste)
 2. Tablas de contingencia.
 3. Análisis de riesgo (odd ratio).
 
@@ -35,6 +35,18 @@ chisq.test(data1)$expected # Calcular las frecuencias esperadas
 
 ¿Aceptamos o rechazamos la hipótesis nula?
 
+```
+## Grafiquemos los datos
+nombres = c("perros","gatos")
+pie(data1, labels=nombres)
+#
+## Agregemos los porcentajes
+pct <- round(data1/sum(data1)*100)  # Calculamos los porcentajes
+nombres = paste(nombres,pct,"%",sep=" ")  # Creamos un texto
+pie(data1, labels=nombres)
+```
+   ![Pie1](https://github.com/lecastaneda/Bioestadistica/blob/main/Pie1)
+--
 ### Ejemplo 2
 
    ![Ejemplo de bondad2](https://github.com/lecastaneda/Bioestadistica/blob/main/Ejemplo2.png)
@@ -54,7 +66,17 @@ sum(data2)
 test1 = chisq.test(data2, p=c(9,3,3,1), rescale=T)
 test1
 test1$expected   # Calcular las frecuencias esperadas
+```
 
+¿Aceptamos o rechazamos la hipótesis nula?
 
+```
+## Grafiquemos los datos
+arvejas = c("amarillas-lisas","verdes-lisas","amarillas-rugosas","verdes-rugosas")
+pct <- round(data2/sum(data2)*100)  # Calculamos los porcentajes
+pie(data2, labels=arvejas, col=rainbow(length(arvejas)))
+```
+
+   ![Pie2](https://github.com/lecastaneda/Bioestadistica/blob/main/Pie2)
 
  

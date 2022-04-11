@@ -191,7 +191,7 @@ Los odds ratio permiten evaluar la posibilidad de que un evento ocurra respecto 
 ```
 ## Instalar el paquete epitools
 install.packages("epitools")
-library(espitools)
+library(epitools)
 #
 ## Crear nombres para las columnas y filas
 coln <- c("Casos","Controles")

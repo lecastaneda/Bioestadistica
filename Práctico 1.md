@@ -7,7 +7,7 @@ En este práctico realizaremos diversos análisis de frecuencias en R. Primero, 
 ## Contenido
 
 1. [Prueba de bondad de ajuste](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico%201.md#1-prueba-de-bondad-de-ajuste)
-2. [Tablas de contingencia](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico%201.md#1-)
+2. [Tablas de contingencia](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico%201.md#2-tablas-de-contingencia)
 3. Análisis de riesgo (odd ratio).
 
 ---
@@ -145,6 +145,9 @@ Descargar los datos contenidos en el archivo de texto [data3.txt](https://github
 data3 = read.table("data3.txt", header=T)
 head(data3)
 #
+## Mostrar las frecuencias de cada celda
+table(data3)
+#
 ## Calcular las proporciones
 prop.table(table(data3))
 #
@@ -158,3 +161,15 @@ chisq.test(data3$Condicion, data3$Glicemia, correct=F)
 chisq.test(data3$Condicion, data3$Glicemia, correct=F)$expected
 ```
 
+Grafiquemos!!!
+
+```
+## Renombrar variables como factores
+data3$Condicion <- factor(data3$Condicion)
+data3$Glicemia <- factor(data3$Glicemia)
+#
+## Realizar un gráfico de barras
+ggplot(data=data3, aes(x=Glicemia, fill=Condicion))+ geom_bar(position="dodge") + ylab("Pacientes")
+```
+
+   ![Barras](https://github.com/lecastaneda/Bioestadistica/blob/main/Bar1.png)

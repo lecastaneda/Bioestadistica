@@ -169,6 +169,8 @@ data3$Condicion <- factor(data3$Condicion)
 data3$Glicemia <- factor(data3$Glicemia)
 #
 ## Realizar un gráfico de barras
+install.packages("ggplot2")
+library(ggplot2)
 ggplot(data=data3, aes(x=Glicemia, fill=Condicion))+ geom_bar(position="dodge") + ylab("Pacientes")
 ```
 

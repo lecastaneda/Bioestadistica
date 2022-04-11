@@ -194,14 +194,14 @@ install.packages("epitools")
 library(espitools)
 #
 ## Crear nombres para las columnas y filas
-coln <- c("Controles","Casos")
+coln <- c("Casos","Controles")
 rown <- c("Genotipo normal; ACO(-)","Genotipo normal; ACO(+)")
 #
 ## Ingresar valores de frecuencias desde la tabla 1
-data4 <- matrix(c(127,35,41,52),2,2, byrow=T)
+data4 <- matrix(c(35,127,52,41),2,2, byrow=T)
 #
 ## Agregar nombres de columnas y filas a la matriz
-dimnames(data4) <- list("Caso-control"=coln, "Condición"=rown) 
+dimnames(data4) <- list("Condición"=rown, "Caso-control"=coln) 
 #
 ## Realizar el análisis de odds ratio
-oddsratio(data4)
+oddsratio(data4, rev="c")

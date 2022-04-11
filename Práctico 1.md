@@ -8,7 +8,7 @@ En este práctico realizaremos diversos análisis de frecuencias en R. Primero, 
 
 1. [Prueba de bondad de ajuste](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico%201.md#1-prueba-de-bondad-de-ajuste)
 2. [Tablas de contingencia](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico%201.md#2-tablas-de-contingencia)
-3. Análisis de riesgo (odd ratio).
+3. [Razón de posibilidades (odds ratio)](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico%201.md#3-raz%C3%B3n-de-posibilidades-odds-ratio)
 
 ---
 ## 1. Prueba de bondad de ajuste.

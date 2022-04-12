@@ -19,7 +19,7 @@ Las pruebas de bondad de ajuste permiten evaluar si una variable categórica se 
 
    ![Ejemplo de bondad1](https://github.com/lecastaneda/Bioestadistica/blob/main/Ejemplo1.png)
 
-¿La clínica veterinaria cercana a mi cada atiende el mismo número de gatos que de perros?
+¿La clínica veterinaria cercana a mi casa atiende el mismo número de gatos que de perros?
 
 H0: el número de gatos que se atiende en la clínica es igual al número de perros.
 

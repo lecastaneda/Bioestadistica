@@ -29,7 +29,7 @@ min(V3)
 max(V3)
 
 ## matrices
-matrix1 = matrix(,2,3, nrow=TRUE)
+matrix1 = matrix(,2,3, nrow=2)
 matrix2 = matrix(V3,2,3)
 matrix3 = matrix(V3,2,3, byrow=TRUE)
 matrix4 = matrix(V3,3,2)

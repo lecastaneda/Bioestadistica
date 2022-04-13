@@ -42,8 +42,8 @@ pie(data1, labels=nombres)
 #
 ## Agregemos los porcentajes
 pct <- round(data1/sum(data1)*100)  # Calculamos los porcentajes
-nombres = paste(nombres,pct,"%",sep=" ")  # Creamos un texto
-pie(data1, labels=nombres)
+nombres1 = paste(nombres,pct,"%",sep=" ")  # Creamos un texto
+pie(data1, labels=nombres1)
 ```
    ![Pie1](https://github.com/lecastaneda/Bioestadistica/blob/main/Pie1)
 

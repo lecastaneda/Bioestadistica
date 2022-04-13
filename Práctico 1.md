@@ -108,7 +108,7 @@ p <- (2*aa+Aa)/(2*n) # frecuencia alelo a
 q <- (2*AA+Aa)/(2*n) # frecuencia alelo A
 ```
 
-Paso 5: Calcular las frecuencias genotípicas esperadas según el Equilibrio de Hardy-Weinberg (p^2 + 2pq + q^2 = 1).
+Paso 5: Calcular las frecuencias genotípicas esperadas según el Equilibrio de Hardy-Weinberg (p<sup>2</sup> + 2pq + q<sup>2</sup> = 1).
 
 ```
 p2 <- p^2

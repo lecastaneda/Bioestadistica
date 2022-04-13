@@ -186,7 +186,6 @@ data3$Glicemia <- factor(data3$Glicemia, levels=c("Normoglicemia","Hiperglicemia
 #
 ggplot(data=data3, aes(x=Glicemia, fill=Condicion))+ geom_bar(position="dodge") + ylab("Pacientes")
 ```
-   ![Barra2]<img src="ttps://github.com/lecastaneda/Bioestadistica/blob/main/Bar2.png" width="400" height="600">)
    
 ---
 ## 3. Razón de posibilidades (odds ratio)

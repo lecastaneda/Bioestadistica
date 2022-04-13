@@ -177,6 +177,16 @@ ggplot(data=data3, aes(x=Glicemia, fill=Condicion))+ geom_bar(position="dodge") 
 
    ![Barras](https://github.com/lecastaneda/Bioestadistica/blob/main/Bar1.png)
 
+R por defecto ordena las variables categóricas en orden alfabético. En este caso, "Hiperglicemia" primero que "Normoglicemia" y "Diabético" primero que "No diabético". Para ordenar los grupos en un orden específico es necesario indicarlo de la siguiente manera.
+
+```
+## Cambiar orden de grupos
+data3$Condicion <- factor(data3$Condicion, levels=c("Diabético","No diabético"))
+data3$Glicemia <- factor(data3$Glicemia, levels=c("Normoglicemia","Diabético"))
+#
+ggplot(data=data3, aes(x=Glicemia, fill=Condicion))+ geom_bar(position="dodge") + ylab("Pacientes")
+```
+
 ---
 ## 3. Razón de posibilidades (odds ratio)
 
@@ -214,4 +224,5 @@ data5 <- matrix(c(127,35,41,52),2,2, byrow=T)
 coln <- c("Controles","Casos")
 dimnames(data5) <- list("Condición"=rown, "Control-caso"=coln) 
 oddsratio(data5)
-     
+```
+

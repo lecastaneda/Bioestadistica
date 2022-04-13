@@ -208,3 +208,10 @@ dimnames(data4) <- list("Condición"=rown, "Caso-control"=coln)
 oddsratio(data4, rev="c")  # Dado que nuestra matriz contiene en la columna 1 los casos y en la columna 2 los controles, la función *oddsratio*
                            # por defecto comparará la la columna 2 versus la columna 1. Pero como queremos comparar casos versus controles,
                            # debemos incluir el argumento *rev="c"* que permitirá invertir las columnas.
+#
+# Otra opción es desde un principio crear una matriz con los controles en la columna 1 y los casos en la columna 2
+data5 <- matrix(c(127,35,41,52),2,2, byrow=T)
+coln <- c("Controles","Casos")
+dimnames(data5) <- list("Condición"=rown, "Control-caso"=coln) 
+oddsratio(data5)
+     

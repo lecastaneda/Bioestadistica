@@ -40,11 +40,12 @@ library(dplyr)
 ## Creamos una tabla que nos entregue el tamaño muestreal, la media, la desviación estándar (DE),
 ## y el error estándar (EE) para cada uno de los antibióticos en estudio
 #
-group_by(data1, Antibiotico) %>%
+tabla1 <- group_by(data1, Antibiotico) %>%
   summarise(muestras=n(),
             media=mean(Tiempo.h, na.rm=T),
             DE=sd(Tiempo.h, na.rm=T),
             EE=DE/sqrt(muestras))
+tabla1
 ```
 
 Usando la librería [ggplot2](https://ggplot2.tidyverse.org/) podemos generar un gráfico de caja-bigote de la variable respuesta en función de los niveles del factor Antibiótico
@@ -184,6 +185,10 @@ plot8 + stat_pvalue_manual(tukey.test1,label="p.adj.signif",tip.length = 0.02, y
 #
 ## Opción con los valores exactos
 plot8 + stat_pvalue_manual(tukey.test1,label="p.adj",tip.length = 0.02, y.position=c(130,140,120))
+#
+#
+tabla1
+plot8 + stat_pvalue_manual(tukey.test1,label="p.adj",tip.length = 0.02, y.position=c(130,140,120))+
 ```
 
 **6. Análisis de poder**

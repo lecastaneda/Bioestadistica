@@ -157,7 +157,8 @@ C. Gráfico de disperción unidimensional (stripchart)
 ```
 plot9 <- data1 %>%
   ggplot(aes(y=Tiempo.h, x=Antibiotico, fill=Antibiotico)) +
-  geom_jitter(show.legend=F, shape=21, color="black", size=4, position=position_jitterdodge(jitter.width=0.3, dodge.width=0.8)) +
+  geom_jitter(show.legend=F, shape=21, color="black", size=4, 
+              position=position_jitterdodge(jitter.width=0.3, dodge.width=0.8)) +
   stat_summary(fun=mean, show.legend=F, geom="crossbar", position=position_dodge(width=0.8), width=0.55) + 
   labs(x="Antibióticos", y="Tiempo de respuesta (h)")+
   theme_classic()+

@@ -56,7 +56,7 @@ ggboxplot(data1, x="Antibiotico", y="Tiempo.h", color="Antibiotico")
 
 ### Supuestos del análisis de una vía
 
-1. Normalidad
+**1. Normalidad**
 
 Ponemos a prueba la normalidad de los datos con la prueba de Shapiro-Wilks. Además observamos la normalidad de los datos con un histograma y un qqplot.
 ```
@@ -78,7 +78,7 @@ plot4
 
 ggarrange(plot1, plot2, plot3, plot4, labels=c("A","B","C","D"), ncol=2, nrow=2)
 ```
-2. Homocedasticidad
+**2. Homocedasticidad**
 
 Pondremos a prueba la homocedasticidad de los dos pruebas: Fligner y Levene (para correr Levene se necesita el paquete car).
 ```
@@ -89,7 +89,7 @@ leveneTest(Tiempo.h ~ Antibiotico, data=data1)
 fligner.test(log10(Tiempo.h) ~ Antibiotico, data=data1)
 leveneTest(log10(Tiempo.h) ~ Antibiotico, data=data1)
 ```
-3. Análisis de una vía (ANOVA).
+**3. Análisis de una vía (ANOVA)**
 
 Dado que nuestros datos cumplen con los supuestos de normalidad y homocedasticidad, podemos realizar un análisis de una vía. Para estos hay dos formas: utilizando el comando aov o el comando lm. Ambas opciones entregan el mismo resultado.
 ```
@@ -112,7 +112,7 @@ plot5
 test2 <- lm(Tiempo.h ~ Antibiotico, data=data1)
 anova(test2)
 summary(test2)
-plot6 <-  ggqqplot(test2$residuals, col="blue", main="Histograma residuales datos crudos")
+plot6 <-  ggqqplot(test2$residuals, col="blue", main="Histograma residuales datos transformados")
 plot6
 
 ggarrange(plot5, plot6, labels=c("A","B"), ncol=2, nrow=1)
@@ -120,7 +120,7 @@ ggarrange(plot5, plot6, labels=c("A","B"), ncol=2, nrow=1)
 
 Independiente si analizamos los datos originles o transformados (log10), podemos concluir que hay diferencias significativas en el tiempo de respuesta de los antibióticos. Sin emabrgo, no podemos saber (aún) si todos los antibióticos tienen una respuesta distinta entre ellos o solo algunos de ellos difieren.
 
-4. Comparaciones múltiple
+**4. Comparaciones múltiple**
 
 Para esto, vamos a realizar dos pruebas a posterior: una comparación múltiple a través de la prueba de significancia honesta de Tukey (Tukey HSD), y varias pruebas pareadas corregidas por Bonferroni
 ```
@@ -133,7 +133,7 @@ data1$log10.tiempo <- log10(data1$Tiempo.h)
 data1 %>% t_test(log10.tiempo ~ Antibiotico) %>% adjust_pvalue(method="bonferroni")
 ```
 
-5. Grafiquemos!!
+**5. Grafiquemos!!**
 
 A. Gráfico de caja-bigote (boxplot)
 ```
@@ -186,13 +186,17 @@ plot8 + stat_pvalue_manual(tukey.test1,label="p.adj.signif",tip.length = 0.02, y
 plot8 + stat_pvalue_manual(tukey.test1,label="p.adj",tip.length = 0.02, y.position=c(130,140,120))
 ```
 
-
-
-
-
-
-
-
+**6. Análisis de poder**
+```
+## Miremos la tabla de ANOVA
+anova(test1)
+#
+## Calcular el poder estadístico del diseño (probabilidad de aceptar H1 cuando es veradadera)
+power.anova.test(groups=3,  n=9, between.var= 1204, within.var=268, sig.level=0.05)
+#
+## Calcular el número mñinimo de replicar para lograr un poder de 1
+power.anova.test(groups=3, power=0.999, between.var=1204, within.var=268.4, sig.level=0.05)
+```
 
 
 

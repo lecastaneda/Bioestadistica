@@ -8,7 +8,7 @@ En este práctico realizaremos diversos análisis de comparación de múltiples 
 
 1. [Análisis paramétrico de una vía](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico2.md#1-an%C3%A1lisis-param%C3%A9trico-de-una-v%C3%ADa)
 2. [Análisis no-paramétrico de una vía](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico2.md#2-an%C3%A1lisis-no-param%C3%A9trico-de-una-v%C3%ADa)
-3. [Análisis factorial]
+3. [Análisis factorial](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico2.md#3-an%C3%A1lisis-factorial)
 
 ---
 ## 1. Análisis paramétrico de una vía
@@ -283,7 +283,7 @@ kt;pt.BH;pt.fdr
 
 Dado que los datos no son normales, la mejor opción de graficarlos es con un gráfico de caja-bigote.
 ```
-plot14<- ggboxplot(data2a, x="year", y="score", fill="year", 
+plot14 <- ggboxplot(data2a, x="year", y="score", fill="year", 
                   xlab="Año", ylab="Notas finales",
                   add="jitter", ylim=c(3.8,7.6), legend="none")
 plot14 

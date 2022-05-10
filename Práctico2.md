@@ -31,7 +31,9 @@ str(data1)
 data1$Antibiotico <- as.factor(data1$Antibiotico)
 str(data1)
 ```
+
 Usando la librería [dplyr](https://dplyr.tidyverse.org/) podemos generar rápidamente tablas de resumen con distintos estadígrafos según lo indiquemos
+
 ```
 library(dplyr)
 #
@@ -44,13 +46,19 @@ group_by(data1, Antibiotico) %>%
             DE=sd(Tiempo.h, na.rm=T),
             EE=DE/sqrt(muestras))
 ```
+
 Usando la librería [ggplot2](https://ggplot2.tidyverse.org/) podemos generar un gráfico de caja-bigote de la variable respuesta en función de los niveles del factor Antibiótico
+
 ```
 library(ggpubr)
 ggboxplot(data1, x="Antibiotico", y="Tiempo.h", color="Antibiotico")
 ```
+
 ### Supuestos del análisis de una vía
+
 1. Normalidad
+
+Ponemos a prueba la normalidad de los datos con la prueba de Shapiro-Wilks. Además observamos la normalidad de los datos con un histograma y un qqplot.
 ```
 shapiro.test(data1$Tiempo.h)
 plot1 <- gghistogram(data1$Tiempo.h, bins=10, title="Histograma datos originales", fill="blue", add="mean")
@@ -71,6 +79,7 @@ plot4
 ggarrange(plot1, plot2, plot3, plot4, labels=c("A","B","C","D"), ncol=2, nrow=2)
 ```
 2. Homocedasticidad
+
 Pondremos a prueba la homocedasticidad de los dos pruebas: Fligner y Levene (para correr Levene se necesita el paquete car).
 ```
 # Datos originales
@@ -81,6 +90,7 @@ fligner.test(log10(Tiempo.h) ~ Antibiotico, data=data1)
 leveneTest(log10(Tiempo.h) ~ Antibiotico, data=data1)
 ```
 3. Análisis de una vía (ANOVA).
+
 Dado que nuestros datos cumplen con los supuestos de normalidad y homocedasticidad, podemos realizar un análisis de una vía. Para estos hay dos formas: utilizando el comando aov o el comando lm. Ambas opciones entregan el mismo resultado.
 ```
 ## Comando aov
@@ -96,6 +106,7 @@ summary(test1)
 plot5 <- ggqqplot(test1$residuals, col="red", main="Histograma residuales datos transformados")
 plot5
 ```
+
 ¿Qué hubiese pasado si hubiesemo realizado el ANOVA si haber transformado los datos?
 ```
 test2 <- lm(Tiempo.h ~ Antibiotico, data=data1)
@@ -106,6 +117,76 @@ plot6
 
 ggarrange(plot5, plot6, labels=c("A","B"), ncol=2, nrow=1)
 ```
+
+Independiente si analizamos los datos originles o transformados (log10), podemos concluir que hay diferencias significativas en el tiempo de respuesta de los antibióticos. Sin emabrgo, no podemos saber (aún) si todos los antibióticos tienen una respuesta distinta entre ellos o solo algunos de ellos difieren.
+
+4. Comparaciones múltiple
+
+Para esto, vamos a realizar dos pruebas a posterior: una comparación múltiple a través de la prueba de significancia honesta de Tukey (Tukey HSD), y varias pruebas pareadas corregidas por Bonferroni
+```
+library(rstatix)
+test1 %>% tukey_hsd() # Prueba de Tukey para los datos transformados
+test2 %>% tukey_hsd() # Prueba de Tukey para los datos originales
+#
+## Crearemos una nueva variable llamada "log10.tiempo"
+data1$log10.tiempo <- log10(data1$Tiempo.h) 
+data1 %>% t_test(log10.tiempo ~ Antibiotico) %>% adjust_pvalue(method="bonferroni")
+```
+
+5. Grafiquemos!!
+
+A. Gráfico de caja-bigote (boxplot)
+```
+plot7<- ggboxplot(data1, x="Antibiotico", y="Tiempo.h", fill="Antibiotico", 
+                  xlab="Antibióticos", ylab="Tiempo respuesta (h)",
+                  legend="none")
+plot7
+```
+
+B. Gráfico de violín
+```
+plot8<- ggviolin(data1, x="Antibiotico", y="Tiempo.h", fill="Antibiotico", 
+                  add="jitter",
+                  xlab="Antibióticos", ylab="Tiempo respuesta (h)",
+                  legend="none")+
+  stat_summary(fun=mean, show.legend=F, geom="crossbar", position=position_dodge(width=0.5), width=0.5) 
+plot8
+```
+
+C. Gráfico de disperción unidimensional (stripchart)
+```
+plot9 <- data1 %>%
+  ggplot(aes(y=Tiempo.h, x=Antibiotico, fill=Antibiotico)) +
+  geom_jitter(show.legend=F, shape=21, color="black", size=4, position=position_jitterdodge(jitter.width=0.3, dodge.width=0.8)) +
+  stat_summary(fun=mean, show.legend=F, geom="crossbar", position=position_dodge(width=0.8), width=0.55) + 
+  labs(x="Antibióticos", y="Tiempo de respuesta (h)")+
+  theme_classic()+
+  theme(axis.text = element_text(size=10, color="black"),
+        axis.title = element_text(size=13))
+plot9
+```
+
+Miremos ahora todos juntos
+```
+ggarrange(plot7, plot8, plot9, labels=c("A","B","C"), ncol=3, nrow=1)
+```
+
+De los tres gráficos, el gráfico de violín es el más informativo porque muestra las medias, el rango de datos, la disperción univariada de estos, y su distribución.
+
+Ahora agreguemos los resultados de las comparaciones múltiples en el gráfico de violín
+```
+tukey.test1 <- data1 %>% tukey_hsd(log10.tiempo ~Antibiotico)
+tukey.test1
+#
+## Opción con símbolos
+plot8 + stat_pvalue_manual(tukey.test1,label="p.adj.signif",tip.length = 0.02, y.position=c(130,140,120))
+#
+## Opción con los valores exactos
+plot8 + stat_pvalue_manual(tukey.test1,label="p.adj",tip.length = 0.02, y.position=c(130,140,120))
+```
+
+
+
 
 
 

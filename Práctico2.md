@@ -203,5 +203,50 @@ power.anova.test(groups=3,  n=9, between.var= 1204, within.var=268, sig.level=0.
 power.anova.test(groups=3, power=0.999, between.var=1204, within.var=268.4, sig.level=0.05)
 ```
 
+---
+## 2. Análisis no-paramétrico de una vía
+
+Descargar los datos contenidos en el archivo Excel [Notas](https://github.com/lecastaneda/Bioestadistica/blob/main/notas_pregrado.txt)
+
+Este set datos corresponde a las notas obtenidas durante cuatro años consecutivos para una asignatura de pregrado de la Facultad de Medicina. ¿Hay diferencias en las notas obtenidas para las distintas generaciones?
+
+```
+## Cargar los datos
+data2 <- read.table("Notas_pregrado.txt", header=T)
+data2 <- na.omit(data2)
+head(data2)
+View(data2)
+str(data2)
+#
+## Asignar a la columna "year" (año) como factor
+data2$year <- as.factor(data2$year)
+str(data2)
+```
+
+Realizar un gráfico de caja-bigotes para ver de forma general los datos
+````
+library(ggpubr)
+ggboxplot(data2, x="year", y="score", color="year")
+#
+## Se pueden observar outliers en algunos años. Estos tienen valores menores a 3, ¿quienes son?
+which(data2$score<3)
+#
+## Procedemos a eliminarlos
+data2a <- data2[-c(277,540),]
+```
+
+Creamos una tabla que nos entregue el tamaño muestreal, la media, la desviación estándar (DE), el error estándar (EE), y los valores míminos y máximos para cada uno de los años
+
+```
+tabla2 <- group_by(data2, year) %>%
+  summarise(muestras=n(),
+            media=mean(score, na.rm=T),
+            DE=sd(score, na.rm=T),
+            EE=DE/sqrt(muestras),
+            min=min(score),
+            max=max(score))
+tabla2
+
+
 
 

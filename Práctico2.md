@@ -6,7 +6,7 @@ En este práctico realizaremos diversos análisis de comparación de múltiples 
 
 ## Contenido
 
-1. [Análisis paramétrico de una vía]
+1. [Análisis paramétrico de una vía](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico2.md#1-an%C3%A1lisis-param%C3%A9trico-de-una-v%C3%ADa)
 2. [Tablas de contingencia]
 3. [Razón de posibilidades (odds ratio)]
 

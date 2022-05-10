@@ -251,18 +251,18 @@ Probamos la normalidad para los datos con y sin outliers. Además probamos la ho
 ```
 ## Normalidad
 shapiro.test(data2$score)
-plot1 <- gghistogram(data2$score, bins=10, title="Histograma datos con outliers", fill="blue", add="mean")
-plot1
-plot2 <- ggqqplot(data2$score, col="blue", main="QQplot datos con outliers")
-plot2
+plot10 <- gghistogram(data2$score, bins=10, title="Histograma datos con outliers", fill="blue", add="mean")
+plot10
+plot11 <- ggqqplot(data2$score, col="blue", main="QQplot datos con outliers")
+plot11
 #
 shapiro.test(data2a$score)
-plot3 <- gghistogram(data2a$score, bins=10, title="Histograma datos sin outlier", fill="red", add="mean")
-plot3
-plot4 <- ggqqplot(data2a$score, col="red", main="Histograma datos sin outlier")
-plot4
+plot12 <- gghistogram(data2a$score, bins=10, title="Histograma datos sin outlier", fill="red", add="mean")
+plot12
+plot13 <- ggqqplot(data2a$score, col="red", main="Histograma datos sin outlier")
+plot13
 #
-ggarrange(plot1, plot2, plot3, plot4, labels=c("A","B","C","D"), ncol=2, nrow=2)
+ggarrange(plot10, plot11, plot12, plot13, labels=c("A","B","C","D"), ncol=2, nrow=2)
 #
 ## Homocedasticidad
 fligner.test(score ~ year, data=data2a)
@@ -283,10 +283,10 @@ kt;pt.BH;pt.fdr
 
 Dado que los datos no son normales, la mejor opción de graficarlos es con un gráfico de caja-bigote.
 ```
-plot10<- ggboxplot(data2a, x="year", y="score", fill="year", 
+plot14<- ggboxplot(data2a, x="year", y="score", fill="year", 
                   xlab="Año", ylab="Notas finales",
                   add="jitter", ylim=c(3.8,7.6), legend="none")
-plot10 
+plot14 
 ```
 
 Ahora incluiremos los resultados de las comparaciones múltiples en el gráfico
@@ -294,7 +294,7 @@ Ahora incluiremos los resultados de las comparaciones múltiples en el gráfico
 post.fdr <- data2a %>% wilcox_test(score ~ year) %>% adjust_pvalue(method="fdr")
 post.fdr
 
-plot10 + stat_pvalue_manual(post.fdr,label="p.adj.signif",tip.length = 0.02, 
+plot14 + stat_pvalue_manual(post.fdr,label="p.adj.signif",tip.length = 0.02, 
                             y.position=c(6.7,7.5,7.7,7,7.2,6.8))
 ```
                        

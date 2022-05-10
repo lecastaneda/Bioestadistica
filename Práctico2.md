@@ -7,7 +7,7 @@ En este práctico realizaremos diversos análisis de comparación de múltiples 
 ## Contenido
 
 1. [Análisis paramétrico de una vía](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico2.md#1-an%C3%A1lisis-param%C3%A9trico-de-una-v%C3%ADa)
-2. [Tablas de contingencia]
+2. [Análisis no-paramétrico de una vía](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico2.md#2-an%C3%A1lisis-no-param%C3%A9trico-de-una-v%C3%ADa)
 3. [Razón de posibilidades (odds ratio)]
 
 ---
@@ -224,7 +224,7 @@ str(data2)
 ```
 
 Realizar un gráfico de caja-bigotes para ver de forma general los datos
-````
+```
 library(ggpubr)
 ggboxplot(data2, x="year", y="score", color="year")
 #
@@ -236,9 +236,8 @@ data2a <- data2[-c(277,540),]
 ```
 
 Creamos una tabla que nos entregue el tamaño muestreal, la media, la desviación estándar (DE), el error estándar (EE), y los valores míminos y máximos para cada uno de los años
-
 ```
-tabla2 <- group_by(data2, year) %>%
+tabla2 <- group_by(data2a, year) %>%
   summarise(muestras=n(),
             media=mean(score, na.rm=T),
             DE=sd(score, na.rm=T),
@@ -246,6 +245,62 @@ tabla2 <- group_by(data2, year) %>%
             min=min(score),
             max=max(score))
 tabla2
+```
+
+Probamos la normalidad para los datos con y sin outliers. Además probamos la homocedasticidad.
+```
+## Normalidad
+shapiro.test(data2$score)
+plot1 <- gghistogram(data2$score, bins=10, title="Histograma datos con outliers", fill="blue", add="mean")
+plot1
+plot2 <- ggqqplot(data2$score, col="blue", main="QQplot datos con outliers")
+plot2
+#
+shapiro.test(data2a$score)
+plot3 <- gghistogram(data2a$score, bins=10, title="Histograma datos sin outlier", fill="red", add="mean")
+plot3
+plot4 <- ggqqplot(data2a$score, col="red", main="Histograma datos sin outlier")
+plot4
+#
+ggarrange(plot1, plot2, plot3, plot4, labels=c("A","B","C","D"), ncol=2, nrow=2)
+#
+## Homocedasticidad
+fligner.test(score ~ year, data=data2a)
+```
+
+Claramente los datos no se adjustan a una distribución normal por lo que debemos utilizar un análisis no paramétrico, a pesar que el supuesto de homocedasticidad si se cumple.
+```
+kt <- kruskal.test(score~year, data=data2a)
+```
+Vamos a agregar una función con la cual si la prueba de Kruskal-Walis resulta significativa (p<0.05), automáticamente se prodecerá a realizar una prueba por parejas corregida por el método de la tasa de descubrimiento falsa (FDR)
+```
+if(kt$p.value < 0.05){
+  pt.fdr <- pairwise.wilcox.test(data2a$score, g=data2a$year,
+                             p.adjust.method="fdr")
+}
+kt;pt.BH;pt.fdr
+```
+
+Dado que los datos no son normales, la mejor opción de graficarlos es con un gráfico de caja-bigote.
+```
+plot10<- ggboxplot(data2a, x="year", y="score", fill="year", 
+                  xlab="Año", ylab="Notas finales",
+                  add="jitter", ylim=c(3.8,7.6), legend="none")
+plot10 
+```
+
+Ahora incluiremos los resultados de las comparaciones múltiples en el gráfico
+```
+post.fdr <- data2a %>% wilcox_test(score ~ year) %>% adjust_pvalue(method="fdr")
+post.fdr
+
+plot10 + stat_pvalue_manual(post.fdr,label="p.adj.signif",tip.length = 0.02, 
+                            y.position=c(6.7,7.5,7.7,7,7.2,6.8))
+```
+                       
+
+
+
 
 
 

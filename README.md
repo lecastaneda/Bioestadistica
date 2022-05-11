@@ -14,4 +14,12 @@ Además recomendamos la utilización de [RStudio](https://www.rstudio.com/produc
 # Contenidos prácticos del curso
 1. [Introducción a R](https://github.com/lecastaneda/Bioestadistica/blob/main/Intro_R.R)
 2. [Práctico 1: análisis de frecuencia](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico%201.md)
-3. [Práctico 2: comparación de múltiples grupos](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico2.md)
+3. [Práctico 3: comparación de múltiples grupos](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico2.md)
+
+
+---
+## Profesor responsable: 
+
+Dr. Luis E. Castañeda. Profesor asistente, Programa de Genética Humana, Instituto de Ciencias Biomédicas (ICBM), Facultad de Medicina, Universidad de Chile.
+
+Contacto: luis.castaneda et uchile dot cl

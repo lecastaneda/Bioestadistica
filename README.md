@@ -18,7 +18,7 @@ Además recomendamos la utilización de [RStudio](https://www.rstudio.com/produc
 
 
 ---
-## Profesor responsable: 
+### Profesor responsable
 
 Dr. Luis E. Castañeda. Profesor asistente, Programa de Genética Humana, Instituto de Ciencias Biomédicas (ICBM), Facultad de Medicina, Universidad de Chile.
 

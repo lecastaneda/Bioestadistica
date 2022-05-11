@@ -278,7 +278,8 @@ if(kt$p.value < 0.05){
   pt.fdr <- pairwise.wilcox.test(data2a$score, g=data2a$year,
                              p.adjust.method="fdr")
 }
-kt;pt.BH;pt.fdr
+kt
+pt.fdr
 ```
 
 Dado que los datos no son normales, la mejor opción de graficarlos es con un gráfico de caja-bigote.

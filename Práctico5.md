@@ -1,11 +1,12 @@
-# Práctico 2: Comparación de múltiples grupos
+# Práctico 5: Análisis multivariado (parte I)
 
-En este práctico realizaremos diversos análisis multivariado en R. Primero, realizaremos una análisis de varianza multivariado (MANOVA) y luego, un análisis de componentes principales (PCA).
+En este realizaremos diversos análisis multivariados en R. Primero realizaremos un análisis multivariado de varianza (MANOVA) y luego un análisis de componentes principales (PCA):
+
 ---
 
 ## Contenido
 
-1. [Análisis de varianza múltivariado](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico2.md#1-an%C3%A1lisis-param%C3%A9trico-de-una-v%C3%ADa)
+1. [Análisis de varianza múltivariado](https://github.com/lecastaneda/Bioestadistica/edit/main/Pr%C3%A1ctico5.md#1-an%C3%A1lisis-de-varianza-multivariado-manova)
 2. [Análisis de componentes principales](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico2.md#2-an%C3%A1lisis-no-param%C3%A9trico-de-una-v%C3%ADa)
 
 ---
@@ -45,4 +46,5 @@ cor.mat %>% cor_mark_significant()
 cor.mat %>% pull_lower_triangle() %>% cor_plot()
 ```
 
+En el siguiente paso realizaremos un MANOVA, pero solo con un subset de datos
 

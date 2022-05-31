@@ -7,7 +7,7 @@ En este realizaremos diversos análisis multivariados en R. Primero realizaremos
 ## Contenido
 
 1. [Análisis de varianza múltivariado](https://github.com/lecastaneda/Bioestadistica/edit/main/Pr%C3%A1ctico5.md#1-an%C3%A1lisis-de-varianza-multivariado-manova)
-2. [Análisis de componentes principales](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico2.md#2-an%C3%A1lisis-no-param%C3%A9trico-de-una-v%C3%ADa)
+2. [Análisis de componentes principales](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico5.md#2-an%C3%A1lisis-de-componentes-principales)
 
 ---
 ## 1. Análisis de varianza multivariado (MANOVA)

@@ -46,5 +46,57 @@ cor.mat %>% cor_mark_significant()
 cor.mat %>% pull_lower_triangle() %>% cor_plot()
 ```
 
-En el siguiente paso realizaremos un MANOVA, pero solo con un subset de datos
+En el siguiente paso realizaremos un MANOVA, pero solo con un subset de datos. Basándonos en la matriz de correlación, seleccionares las variables pH, cárbono (C), nitrógeno (N), fósforo (P) y potasio (K).
+
+```
+head(data)
+#
+## pH (columna 3), cárbono (columna 4), nitrógeno (columna 5), fósforo (columna 8) y potasio (columna 9).
+## Cálculemos el promedio, desviación estándar y número de muestras para cada localidad
+round(aggregate(data[,c(3,4,5,8,9)],list(data$site),mean),2)
+round(aggregate(data[,c(3,4,5,8,9)],list(data$site),sd),2)
+ggregate(data[,c(3,4,5,8,9)],list(data$site),length)
+#
+## Evaluar la normalidad multivariada
+library(MVN)
+mvn(data[,c(3,4,5,8,9)],mvnTest="hz")
+#
+## Evaluar la homogeneidad de varianzas
+library(car)
+leveneTest(data$pH ~data$site)
+leveneTest(data$C ~data$site)
+leveneTest(data$N ~data$site)
+leveneTest(data$P ~data$site)
+leveneTest(data$K ~data$site)
+#
+## Evaluar presencia de outliers
+mahalanobis_distance(data = data[, c("pH","C","N","P","K")])$is.outlier
+#
+## Realizar el MANOVA
+test1 <- manova(cbind(pH,C,N,P,K) ~ site, data=data)
+anova(test1, test="Wilks")
+#
+## Cálcular el tamaño del efecto
+library(effectsize)
+eta_squared(test1)
+#
+## Revisar los resultados del ANOVA para cada variable
+summary.aov(test1)
+# ó
+m1 <- aov(data$pH ~data$site); anova(m1)
+m2 <- aov(data$C ~data$site); anova(m2)
+m3 <- aov(data$N ~data$site); anova(m3)
+m4 <- aov(data$P ~data$site); anova(m4)
+m5 <- aov(data$K ~data$site); anova(m5)
+#
+## Realizar las pruebas a posteriori
+post.m1 <- TukeyHSD(m1); plot(post.m1)
+post.m2 <- TukeyHSD(m1); plot(post.m2)
+post.m3 <- TukeyHSD(m1); plot(post.m3)
+post.m5 <- TukeyHSD(m1); plot(post.m5)
+```
+
+Gráfiquemos una de las variables: pH
+
+
 

@@ -162,7 +162,7 @@ plot(PC1,PC2,pch=21,bg=col,cex=1.5,bty="o")   # Valores de los ejes duplicados
 plot(PC1, PC2, pch=21, bg=col, cex=1.5, bty="o", las=1, xlim=c(-5,5), ylim=c(-3,3))
 par(new=T)
 biplot(pca, col=c("white","purple"), cex=1,xaxt="n",yaxt="n")
-legend(2.5,-2,c("Catanli","Huillilemu","Las Palmas","Neltume","Pelchuquín"),bty="n",pch=21,cex=1,pt.bg=c("red","blue","black","green","orange"),y.intersp=0.2)
+legend(2.5,-2, c("Catanli","Huillilemu","LasPalmas","Neltume","Pelchuquín"), bty="n", pch=21, cex=1, pt.bg=c("red","blue","black","green","orange"), y.intersp=0.2)
 ```
 
 Análicemos cómo varía PC1 entre los distintos sitios

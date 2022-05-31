@@ -73,15 +73,15 @@ leveneTest(data$K ~data$site)
 mahalanobis_distance(data = data[, c("pH","C","N","P","K")])$is.outlier
 #
 ## Realizar el MANOVA
-test1 <- manova(cbind(pH,C,N,P,K) ~ site, data=data)
-anova(test1, test="Wilks")
+m0 <- manova(cbind(pH,C,N,P,K) ~ site, data=data)
+anova(m0, test="Wilks")
 #
 ## Cálcular el tamaño del efecto
 library(effectsize)
-eta_squared(test1)
+eta_squared(m0)
 #
 ## Revisar los resultados del ANOVA para cada variable
-summary.aov(test1)
+summary.aov(m0)
 # ó
 m1 <- aov(data$pH ~data$site); anova(m1)
 m2 <- aov(data$C ~data$site); anova(m2)
@@ -97,6 +97,27 @@ post.m5 <- TukeyHSD(m1); plot(post.m5)
 ```
 
 Gráfiquemos una de las variables: pH
+```
+plot1 <- ggboxplot(data, x="site", y="pH", col="black", ylab="pH", xlab="Sitios", add="jitter")
+plot1
+#
+## Agregar símbolos de la prueba a posteriori
+test1 <- data %>% t_test(pH~site) %>% add_significance() %>% adjust_pvalue(method="fdr")
+test1
+#
+## Establecer posiciones de las líneas
+test1a <- test1 %>% add_xy_position(x="site",dodge=0.8) %>% 
+  mutate(y.position=c(7.1,6.95,6.8,6.65,6.5,6.35,6.2,6.05,5.9,5.6))
+test1a
+#
+## Gráfico final
+plot1 + stat_pvalue_manual(test2.2,label="p.adj.signif",tip.length = 0.01)
+#
+## Gráfico fibal v2
+test1b <- test1 %>% add_xy_position(x="site",dodge=0.8) %>% mutate(y.position=c(NA,NA,6.2,6.1,NA,NA,NA,NA,NA,NA))
+plot1+stat_pvalue_manual(test1b,label="p.adj.signif",tip.length = 0.01)
+```
+
 
 
 

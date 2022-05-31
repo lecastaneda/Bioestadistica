@@ -118,6 +118,76 @@ test1b <- test1 %>% add_xy_position(x="site",dodge=0.8) %>% mutate(y.position=c(
 plot1+stat_pvalue_manual(test1b,label="p.adj.signif",tip.length = 0.01)
 ```
 
+---
+## 2. Análisis de componentes principales
 
+Usaremos el mismo set de datos deascargado anteriormente.
 
+```
+data1 <- read.table("Suelos.txt", header=T)
+head(data1)
+data2 <- data1[,-c(1,2)]
+cor.mat <- data2 %>% cor_mat()
+cor.mat
+cor.mat %>% cor_get_pval()
+cor.mat %>% cor_mark_significant()
 
+## Realizar el PCA
+pca <- prcomp(data1, scale=T)  # scale=T porque las variables están en distintas unidades
+summary(pca)
+plot(pca)   # Grafica la varianza explicada por cada PCs
+biplot(pca) # Gráfico básico de los vectores asociados las variables respuesta y la ubicación espacial de las muestras
+
+## Obtener información del PCA
+names(pca)
+pca$sdev # sd (varianza) explicada por cada PC
+pca$rotation  # contribución de cada variable a cada PC
+pca$center   # valor usado para centrar (media)
+pca$scale  # valor usado para escalar (sd)
+pca$x   # coordenadas para cada muestra
+#
+## Crear dos variables (PC1 y PC2) para graficar las muestras en el gráfico del PCA
+PC1 <- pca$x[,1]
+PC2 <- pca$x[,2]
+
+## Grafiquemos nuevamente, pero ahora solo los vectores
+biplot(pca,col="purple",xlim=c(-0.5,0.5),ylim=c(-0.5,0.5),las=1,cex=1)  ### ????
+biplot(pca,col=c("white","purple"),xlim=c(-0.5,0.5),ylim=c(-0.5,0.5),las=1,cex=1)
+#
+## Agreguemos las muestras sobre el mismo gráfico, pero en vez de números graficaremos puntos de colores
+col <- c(rep("red",3),rep("blue",3),rep("black",3),rep("green",3),rep("orange",3))
+par(new=T)
+plot(PC1,PC2,pch=21,bg=col,cex=1.5,bty="o")   # Valores de los ejes duplicados
+#
+plot(PC1, PC2, pch=21, bg=col, cex=1.5, bty="o", las=1, xlim=c(-5,5), ylim=c(-3,3))
+par(new=T)
+biplot(pca, col=c("white","purple"), cex=1,xaxt="n",yaxt="n")
+legend(2.5,-2,c("Catanli","Huillilemu","Las Palmas","Neltume","Pelchuquín"),bty="n",pch=21,cex=1,pt.bg=c("red","blue","black","green","orange"),y.intersp=0.2)
+```
+
+Análicemos cómo varía PC1 entre los distintos sitios
+
+```
+data$PC1 <- PC1   # Agregar la variable PC1 al dataset "data"
+shapiro.test(data$PC1)  # Prubea de normalidad
+ggqqplot(data$PC1)
+leveneTest(data$PC1 ~ data$site)  # Prueba de homocedasticidad
+#
+## ANOVA usando el PC!
+test3 <- aov(PC1 ~ site, data=data)
+anova(test3)    # Resultado
+TukeyHSD(test3) # Comparación a posteriori
+```
+
+Grafiquemos!
+
+```
+ggboxplot(data, x="site", y="PC1", col="black", ylab="PC1", xlab="Sitios", add="jitter")
+#
+## Reordenar grupos, graficar y agregar símbolos de significancia
+data$site <- factor(data$site, levels=c("LasPalmas","Pelchuquin","Neltume","Catanli","Huillilemu"))
+plot2 <- ggboxplot(data, x="site", y="PC1", col="black", ylab="PC1", xlab="Sitios", add="jitter")
+plot2
+plot2 + stat_pvalue_manual(tukey.test,label="p.adj.signif",tip.length = 0.02, 
+                            y.position=c(NA,NA,4.8,5.4,NA,3.6,4.2,NA,NA,NA))
+```

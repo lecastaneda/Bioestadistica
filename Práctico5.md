@@ -23,6 +23,8 @@ library(rstatix)
 ## cargar los datos
 data1 <- read.table("Suelos.txt", header=T)
 head(data1)
+str(data1)
+data1$site <- as.factor(data1$site)
 
 ## Estimar las correlaciones entre todas las variables físico-químicas.
 cor(data1)
@@ -55,7 +57,7 @@ head(data)
 ## Cálculemos el promedio, desviación estándar y número de muestras para cada localidad
 aggregate(data1[,c(3,4,5,8,9)],list(data1$site),mean)
 aggregate(data1[,c(3,4,5,8,9)],list(data1$site),sd)
-ggregate(data1[,c(3,4,5,8,9)],list(data1$site),length)
+aggregate(data1[,c(3,4,5,8,9)],list(data1$site),length)
 #
 ## Evaluar la normalidad multivariada
 library(MVN)
@@ -101,21 +103,37 @@ Gráfiquemos una de las variables: pH
 plot1 <- ggboxplot(data1, x="site", y="pH", col="black", ylab="pH", xlab="Sitios", add="jitter")
 plot1
 #
-## Agregar símbolos de la prueba a posteriori
+
+## Establecer posiciones de las líneas
+## Pero primero ordenaremos los sitios de mayor a menor para
+## favorecer la estética del gráfico
+data1$site <- factor(data1$site, levels=c("Neltume","Huillilemu","Catanli","LasPalmas","Pelchuquin"))
+#
+## Volvemos a gráficas
+plot1 <- ggboxplot(data1, x="site", y="pH", col="black", ylab="pH", xlab="Sitios", add="jitter")
+plot1
+#
+## Realizamos la prueba a posteriori
 test1 <- data1 %>% t_test(pH~site) %>% add_significance() %>% adjust_pvalue(method="fdr")
 test1
-#
-## Establecer posiciones de las líneas
+## Agragamos las posiciones en el y donde queremos que vayan las líneas de significancia
 test1a <- test1 %>% add_xy_position(x="site",dodge=0.8) %>% 
   mutate(y.position=c(7.1,6.95,6.8,6.65,6.5,6.35,6.2,6.05,5.9,5.6))
 test1a
 #
 ## Gráfico final
 plot1 + stat_pvalue_manual(test1a,label="p.adj.signif",tip.length = 0.01)
+# 
+## Este gráfico tiene todas las significancias entre pares de sitios,
+## pero se ve muy saturado, así que dejaremos solo las comparaciones significativas
+## Para esto, reemplazamos las líneas que no queremos cono NAs
+test1b <- test1 %>% add_xy_position(x="site",dodge=0.8) %>% 
+  mutate(y.position=c(NA,NA,6.8,6.65,NA,NA,NA,NA,NA,NA))
+test1b
 #
-## Gráfico fibal v2
-test1b <- test1 %>% add_xy_position(x="site",dodge=0.8) %>% mutate(y.position=c(NA,NA,6.2,6.1,NA,NA,NA,NA,NA,NA))
+## Gráfico final v2
 plot1+stat_pvalue_manual(test1b,label="p.adj.signif",tip.length = 0.01)
+
 ```
 
 ---

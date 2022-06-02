@@ -53,27 +53,27 @@ head(data)
 #
 ## pH (columna 3), cárbono (columna 4), nitrógeno (columna 5), fósforo (columna 8) y potasio (columna 9).
 ## Cálculemos el promedio, desviación estándar y número de muestras para cada localidad
-round(aggregate(data[,c(3,4,5,8,9)],list(data$site),mean),2)
-round(aggregate(data[,c(3,4,5,8,9)],list(data$site),sd),2)
-ggregate(data[,c(3,4,5,8,9)],list(data$site),length)
+aggregate(data1[,c(3,4,5,8,9)],list(data1$site),mean)
+aggregate(data1[,c(3,4,5,8,9)],list(data1$site),sd)
+ggregate(data1[,c(3,4,5,8,9)],list(data1$site),length)
 #
 ## Evaluar la normalidad multivariada
 library(MVN)
-mvn(data[,c(3,4,5,8,9)],mvnTest="hz")
+mvn(data1[,c(3,4,5,8,9)],mvnTest="hz")
 #
 ## Evaluar la homogeneidad de varianzas
 library(car)
-leveneTest(data$pH ~data$site)
-leveneTest(data$C ~data$site)
-leveneTest(data$N ~data$site)
-leveneTest(data$P ~data$site)
-leveneTest(data$K ~data$site)
+leveneTest(data1$pH ~data1$site)
+leveneTest(data1$C ~data1$site)
+leveneTest(data1$N ~data1$site)
+leveneTest(data1$P ~data1$site)
+leveneTest(data1$K ~data1$site)
 #
 ## Evaluar presencia de outliers
-mahalanobis_distance(data = data[, c("pH","C","N","P","K")])$is.outlier
+mahalanobis_distance(data = data1[, c("pH","C","N","P","K")])$is.outlier
 #
 ## Realizar el MANOVA
-m0 <- manova(cbind(pH,C,N,P,K) ~ site, data=data)
+m0 <- manova(cbind(pH,C,N,P,K) ~ site, data=data1)
 anova(m0, test="Wilks")
 #
 ## Cálcular el tamaño del efecto
@@ -83,11 +83,11 @@ eta_squared(m0)
 ## Revisar los resultados del ANOVA para cada variable
 summary.aov(m0)
 # ó
-m1 <- aov(data$pH ~data$site); anova(m1)
-m2 <- aov(data$C ~data$site); anova(m2)
-m3 <- aov(data$N ~data$site); anova(m3)
-m4 <- aov(data$P ~data$site); anova(m4)
-m5 <- aov(data$K ~data$site); anova(m5)
+m1 <- aov(data1$pH ~data1$site); anova(m1)
+m2 <- aov(data1$C ~data1$site); anova(m2)
+m3 <- aov(data1$N ~data1$site); anova(m3)
+m4 <- aov(data1$P ~data1$site); anova(m4)
+m5 <- aov(data1$K ~data1$site); anova(m5)
 #
 ## Realizar las pruebas a posteriori
 post.m1 <- TukeyHSD(m1); plot(post.m1)
@@ -98,11 +98,11 @@ post.m5 <- TukeyHSD(m1); plot(post.m5)
 
 Gráfiquemos una de las variables: pH
 ```
-plot1 <- ggboxplot(data, x="site", y="pH", col="black", ylab="pH", xlab="Sitios", add="jitter")
+plot1 <- ggboxplot(data1, x="site", y="pH", col="black", ylab="pH", xlab="Sitios", add="jitter")
 plot1
 #
 ## Agregar símbolos de la prueba a posteriori
-test1 <- data %>% t_test(pH~site) %>% add_significance() %>% adjust_pvalue(method="fdr")
+test1 <- data1 %>% t_test(pH~site) %>% add_significance() %>% adjust_pvalue(method="fdr")
 test1
 #
 ## Establecer posiciones de las líneas
@@ -111,7 +111,7 @@ test1a <- test1 %>% add_xy_position(x="site",dodge=0.8) %>%
 test1a
 #
 ## Gráfico final
-plot1 + stat_pvalue_manual(test2.2,label="p.adj.signif",tip.length = 0.01)
+plot1 + stat_pvalue_manual(test1a,label="p.adj.signif",tip.length = 0.01)
 #
 ## Gráfico fibal v2
 test1b <- test1 %>% add_xy_position(x="site",dodge=0.8) %>% mutate(y.position=c(NA,NA,6.2,6.1,NA,NA,NA,NA,NA,NA))
@@ -173,7 +173,7 @@ shapiro.test(data$PC1)  # Prubea de normalidad
 ggqqplot(data$PC1)
 leveneTest(data$PC1 ~ data$site)  # Prueba de homocedasticidad
 #
-## ANOVA usando el PC!
+## ANOVA usando el PC1
 test3 <- aov(PC1 ~ site, data=data)
 anova(test3)    # Resultado
 TukeyHSD(test3) # Comparación a posteriori

@@ -15,6 +15,7 @@ Además recomendamos la utilización de [RStudio](https://www.rstudio.com/produc
 1. [Introducción a R](https://github.com/lecastaneda/Bioestadistica/blob/main/Intro_R.R)
 2. [Práctico 1: análisis de frecuencia](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico%201.md)
 3. [Práctico 3: comparación de múltiples grupos](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico2.md)
+4. [Práctico 5: análsisi multivariado I](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico5.md)
 
 
 ---

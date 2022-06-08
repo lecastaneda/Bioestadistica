@@ -6,7 +6,7 @@ En este práctico veremos:
 
 1. [Análisis de componentes principales (PCA)](https://github.com/lecastaneda/Bioestadistica/edit/main/Practico6.md#1-an%C3%A1lisis-de-componentes-principales-pca)
 2. [Escalamiento multidimensional (MDS)](https://github.com/lecastaneda/Bioestadistica/edit/main/Practico6.md#2-escalamiento-multidimensional-mds)
-3. [Análisis de conglomerados (Clusters)(https://github.com/lecastaneda/Bioestadistica/edit/main/Practico6.md#3-an%C3%A1lisis-de-conglomerados-clusters)
+3. [Análisis de conglomerados (Clusters)](https://github.com/lecastaneda/Bioestadistica/edit/main/Practico6.md#3-an%C3%A1lisis-de-conglomerados-clusters)
 
 ---
 ## 1. Análisis de componentes principales (PCA)

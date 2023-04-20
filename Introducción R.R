@@ -1,4 +1,4 @@
-# Introducción a R.
+# Introducción a R (Juan Soto).
 
 # En esta sección haremos una breve introducción al programa R. Aprenderemos a hacer operaciones matemáticas básicas, crear vectores, matrices, etc.
 

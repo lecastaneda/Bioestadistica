@@ -200,5 +200,31 @@ summary(m3)
 m4 <- aov(weight ~ Diet*Time, data = ChickWeight)
 summary(m4)
 ```
+Grafiquemos!
+```
+data_summary <- function(data, varname, groupnames){
+  require(plyr)
+  summary_func <- function(x, col){
+    c(mean = mean(x[[col]], na.rm=TRUE),
+      sd = sd(x[[col]], na.rm=TRUE))
+  }
+  data_sum<-ddply(data, groupnames, .fun=summary_func,
+                  varname)
+  data_sum <- rename(data_sum, c("mean" = varname))
+  return(data_sum)
+}
 
 
+df3 <- data_summary(ChickWeight, varname="weight", 
+                    groupnames=c("Time", "Diet"))
+                    
+plot6 <- ggplot(df3, aes(x=Time, y=weight, group=Diet, color=Diet)) + 
+  geom_line(position=position_dodge(0.8)) +
+  geom_point(position=position_dodge(0.8))+
+  geom_errorbar(aes(ymin=weight-sd, ymax=weight+sd), width=.1,
+                position=position_dodge(0.8))+
+  labs(x="Age (d)", y = "Weight")+
+  theme_classic()
+quartz(10,8)
+plot6
+```

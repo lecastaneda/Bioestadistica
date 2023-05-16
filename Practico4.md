@@ -179,6 +179,8 @@ plot5
 ---
 ### 2. Diseño de medidas repetidas
 
+Vamos a trabajar con uno de los muchos set de datos ya incluidos en R: ChickenWeight. Este set de datos corresponde a el peso de unos pollos registrado a lo largo del tiempo y que fueron alimentados con 4 dietas distintas. Lo particular de este set de datos, es que los pollos son los mismos desde el inicio al final del experimento.
+
 ```
 data("ChickWeight")
 
@@ -187,10 +189,14 @@ ggplot(data = ChickWeight, aes(x = Time, y = weight, colour = Diet)) +
   geom_line(aes(group = Chick))
 ```
 
+Hay varias forma de evaluar el efecto de la dieta a lo largo del tiempo en un diseño de medidas repetidas. Acá solo le mostramos la versión clásica.
 ```
 m3 <- aov(weight ~ Diet + Error(Chick/Time), data = ChickWeight)
 summary(m3)
+```
 
+¿Qué pasa si analizamos los datos con un modelo estadístico erróneo?
+```
 m4 <- aov(weight ~ Diet*Time, data = ChickWeight)
 summary(m4)
 ```

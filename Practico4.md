@@ -2,7 +2,7 @@
 
 ## Contenido
 
-1. [Diseño ortgonal](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico2.md#3-an%C3%A1lisis-factorial)
+1. [Diseño ortgonal](https://github.com/lecastaneda/Bioestadistica/blob/main/Practico4.md#1-an%C3%A1lisis-ortgonal)
 2. [Diseño de medidas repetidas)
 
 ---
@@ -176,3 +176,23 @@ plot5 <- ggplot(df2, aes(x=treat, y=timeko, group=sex, color=sex)) +
           theme_classic()
 plot5
 ```
+---
+### 2. Diseño de medidas repetidas
+
+```
+data("ChickWeight")
+
+ggplot(data = ChickWeight, aes(x = Time, y = weight, colour = Diet)) +
+  geom_point() +
+  geom_line(aes(group = Chick))
+```
+
+```
+m3 <- aov(weight ~ Diet + Error(Chick/Time), data = ChickWeight)
+summary(m3)
+
+m4 <- aov(weight ~ Diet*Time, data = ChickWeight)
+summary(m4)
+```
+
+

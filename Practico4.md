@@ -2,10 +2,11 @@
 
 ## Contenido
 
-1. [Análisis factorial](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico2.md#3-an%C3%A1lisis-factorial)
+1. [Diseño ortgonal](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico2.md#3-an%C3%A1lisis-factorial)
+2. [Diseño de medidas repetidas)
 
 ---
-### 1. Análisis factorial
+### 1. Análisis ortgonal
 
 Descargar los datos contenidos en el archivo Excel [Resistencia](https://github.com/lecastaneda/Bioestadistica/blob/main/Resistencia.xlsx)
 

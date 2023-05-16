@@ -27,6 +27,14 @@ Estimar las media, desviación estándar. tamaño muestreal para ambos factore
 with(data3,tapply(timeko,list(treat,sex),mean))
 with(data3,tapply(timeko,list(treat,sex),sd))
 with(data3,tapply(timeko,list(treat,sex),length))
+
+tabla1 <- group_by(data3, treat, sex) %>%
+  summarise(muestras=n(),
+            media=mean(score, na.rm=T),
+            DE=sd(score, na.rm=T),
+            EE=DE/sqrt(muestras),
+            min=min(score),
+            max=max(score))
 ```
 
 Gráfico rápido para evaluar tendencias

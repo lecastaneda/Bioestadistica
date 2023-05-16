@@ -1,0 +1,135 @@
+# Práctico 4: Diseños factoriales
+
+## Contenido
+
+1. [Análisis factorial](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico2.md#3-an%C3%A1lisis-factorial)
+
+---
+## 1. Análisis factorial
+
+Descargar los datos contenidos en el archivo Excel [Resistencia](https://github.com/lecastaneda/Bioestadistica/blob/main/Resistencia.xlsx)
+
+Este set datos corresponde a un experimento para evaluar el efecto de la microbiota intestinal y el sexo sobre la resistencia térmica en *Drosophila melanogaster*. ¿Hay efectos de la microbiota y/o el sexo sobre la resistencia térmica? ¿Estos factores interactúan entre sí?
+
+```
+## Cargar los datos
+data3 <- read_xlsx("Resistencia.xlsx")
+head(data3)
+str(data3)
+#
+## Asginar columnas como factores
+data3$sex <- as.factor(data3$sex)
+data3$treat <- as.factor(data3$treat)
+```
+
+Estimar las media, desviación estándar. tamaño muestreal para ambos factore
+```
+with(data3,tapply(timeko,list(treat,sex),mean))
+with(data3,tapply(timeko,list(treat,sex),sd))
+with(data3,tapply(timeko,list(treat,sex),length))
+```
+
+Gráfico rápido para evaluar tendencias
+```
+library(ggpubr)
+ggboxplot(data3, x="sex", y="timeko", color="treat")
+```
+
+Probamos la normalidad
+```
+shapiro.test(data3$timeko)
+plot15 <- gghistogram(data3$timeko, bins=10, title="Histograma datos originales", fill="blue", add="mean")
+plot15
+plot16 <- ggqqplot(data3$timeko, col="blue", main="QQplot datos originales")
+plot16
+
+ggarrange(plot15, plot16, labels=c("A","B"), ncol=2, nrow=1)
+```
+
+Probamos la homocedasticidad
+```
+library(car)
+leveneTest(timeko ~ sex*treat, data=data3)
+````
+
+Dado que los datos son normales y homocedásticos, procedemos a analizar los datos con una ANOVA de dos vías
+```
+m1 <- lm(timeko ~ treat*sex, data=data3)
+anova(m1)
+#
+## Prueba a posteriori de Tukey
+tukey.test2 <- data3 %>% tukey_hsd(timeko ~ treat*sex)
+tukey.test2
+```
+
+Graficamos
+```
+plot17 <- ggboxplot(data3, x="treat", y="timeko", color="sex", ylim=c(0,65),
+                    add="jitter", xlab="Treatment", ylab="Knockdown time (min)", 
+                    legend="right", palette=c("blue","purple"))
+plot17
+```
+
+Agregamos los símbolos de significancia
+```
+plot17 + stat_pvalue_manual(tukey.test2,label="p.adj.signif",tip.length = 0.02, 
+                              y.position=c(65,64,63,62,61,60,59,58))
+```
+
+Esta opción requiere ingresar los valores de todas las combinaciones, pero no es lo que queremos, así que lo haremos manualmente.
+```
+plot17 + geom_line(data=tibble(x=c(1, 2), y=c(63, 63)),
+            aes(x=x, y=y),
+            inherit.aes=FALSE)+
+        geom_text(data=tibble(x=1.5, y=64),
+            aes(x=x, y=y, label="****"), size=4,
+            inherit.aes=FALSE)+
+        geom_line(data=tibble(x=c(0.8, 1.2), y=c(40, 40)),
+            aes(x=x, y=y),
+            inherit.aes=FALSE)+
+        geom_text(data=tibble(x=1, y=43),
+            aes(x=x, y=y, label="ns"), size=4,
+            inherit.aes=FALSE)+
+        geom_line(data=tibble(x=c(1.8, 2.2), y=c(54,54)),
+            aes(x=x, y=y),
+            inherit.aes=FALSE)+
+        geom_text(data=tibble(x=2, y=57),
+            aes(x=x, y=y, label="ns"), size=4,
+            inherit.aes=FALSE)
+ ```
+ 
+Opción para graficar las líneas de tendencia
+
+1. Ejecutamos esta función para calcular medias y desviaciones estándares para cada combinación.
+```
+data_summary <- function(data, varname, groupnames){
+  require(plyr)
+  summary_func <- function(x, col){
+    c(mean = mean(x[[col]], na.rm=TRUE),
+      sd = sd(x[[col]], na.rm=TRUE))
+  }
+  data_sum<-ddply(data, groupnames, .fun=summary_func,
+                  varname)
+  data_sum <- rename(data_sum, c("mean" = varname))
+  return(data_sum)
+}
+```
+
+2. Luego ingresamos la información de nuestros datos.
+```
+df2 <- data_summary(data3, varname="timeko", 
+                    groupnames=c("sex", "treat"))
+```
+
+3. Graficamos.
+```
+plot18 <- ggplot(df2, aes(x=treat, y=timeko, group=sex, color=sex)) + 
+          geom_line(position=position_dodge(0.1)) +
+          geom_point(position=position_dodge(0.1))+
+          geom_errorbar(aes(ymin=timeko-sd, ymax=timeko+sd), width=.1,
+                position=position_dodge(0.1))+
+          labs(x="Treatment", y = "Knockdown time (min)")+
+          theme_classic()+
+          theme(axis.text.x = element_markdown())
+plot18
+```

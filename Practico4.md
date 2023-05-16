@@ -146,34 +146,14 @@ Opción para graficar las líneas de tendencia
 
 1. Ejecutamos esta función para calcular medias y desviaciones estándares para cada combinación.
 ```
-data_summary <- function(data, varname, groupnames){
-  require(plyr)
-  summary_func <- function(x, col){
-    c(mean = mean(x[[col]], na.rm=TRUE),
-      sd = sd(x[[col]], na.rm=TRUE))
-  }
-  data_sum<-ddply(data, groupnames, .fun=summary_func,
-                  varname)
-  data_sum <- rename(data_sum, c("mean" = varname))
-  return(data_sum)
-}
-```
-
-2. Luego ingresamos la información de nuestros datos.
-```
-df2 <- data_summary(data3, varname="timeko", 
-                    groupnames=c("sex", "treat"))
-```
-
-3. Graficamos.
-```
-plot5 <- ggplot(df2, aes(x=treat, y=timeko, group=sex, color=sex)) + 
-          geom_line(position=position_dodge(0.1)) +
-          geom_point(position=position_dodge(0.1))+
-          geom_errorbar(aes(ymin=timeko-sd, ymax=timeko+sd), width=.1,
+tabla1
+plot5 <- ggplot(tabla1, aes(x=treat, y=media, group=sex, color=sex)) + 
+  geom_line(position=position_dodge(0.1)) +
+  geom_point(position=position_dodge(0.1))+
+  geom_errorbar(aes(ymin=media-EE, ymax=media+EE), width=.1,
                 position=position_dodge(0.1))+
-          labs(x="Treatment", y = "Knockdown time (min)")+
-          theme_classic()
+  labs(x="Treatment", y = "Knockdown time (min)")+
+  theme_classic()
 plot5
 ```
 ---

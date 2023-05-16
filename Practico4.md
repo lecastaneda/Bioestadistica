@@ -5,7 +5,7 @@
 1. [Análisis factorial](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico2.md#3-an%C3%A1lisis-factorial)
 
 ---
-## 1. Análisis factorial
+### 1. Análisis factorial
 
 Descargar los datos contenidos en el archivo Excel [Resistencia](https://github.com/lecastaneda/Bioestadistica/blob/main/Resistencia.xlsx)
 

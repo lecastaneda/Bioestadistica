@@ -3,7 +3,7 @@
 ## Contenido
 
 1. [Diseño ortgonal](https://github.com/lecastaneda/Bioestadistica/blob/main/Practico4.md#1-an%C3%A1lisis-ortgonal)
-2. [Diseño de medidas repetidas)
+2. [Diseño de medidas repetidas] (https://github.com/lecastaneda/Bioestadistica/blob/main/Practico4.md#2-dise%C3%B1o-de-medidas-repetidas)
 
 ---
 ### 1. Análisis ortgonal

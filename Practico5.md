@@ -66,5 +66,60 @@ m1 <- lm(AUC ~ sex, data=tac)
 anova(m1)
 summary(m1)
 ```
+---
+### 2. Análisis de correlación
+
+Ahora vamos a anlaizar las correlaciones entre los distintos valores de tacrolimus plasmáticos y los valores calculados de AUC. 
+Por ejemplo, primeros analizaremos al correlación entre C0 y AUC.
+```
+# Probamos al normalidad entre ambas variables
+shapiro.test(tac$C0)
+shapiro.test(tac$AUC)
+#
+# Analizamos la correlación
+cor.test(tac$AUC,tac$C0)
+#
+# Grafiquemos ambas variables
+plot(tac$C0,tac$AUC)
+#
+# Mejoremos el gráfico-
+par(mar=c(5,5,1,1))
+plot(tac$C0,tac$AUC, las=1, pch=21, bg= "purple", 
+     xlab="TAC C0 (ng/ml)", ylab=("AUC (ng/ml/h)"),
+     cex=1.2)
+```
+
+Ahora realizamos el mismo procedimientos con el resto de las variables.
+```
+cor.test(tac$AUC,tac$C1)
+cor.test(tac$AUC,tac$C2)
+cor.test(tac$AUC,tac$C4)
+cor.test(tac$AUC,tac$C12)
+cor.test(tac$AUC,tac$C24)
+```
+
+Existe una manera más rápida de realizar el mismo proceso, auqnue la información entregada en más limitada.
+```
+library(rstatix)
+tac %>% cor_mat()
+str(tac)
+#
+# Retenemos las variables numéricas para evitar el error anterios.
+tac2 <- tac[,c(2:7,10)]
+str(tac2)
+cor.mat <- tac2 %>% cor_mat()
+cor.mat
+```
+
+Veamos qué correlaciones son significativas.
+```
+cor.mat %>% cor_get_pval()
+cor.mat %>% cor_mark_significant()
+```
+
+Grafiquemos la matriz de correlación
+```
+cor.mat %>% pull_lower_triangle() %>% cor_plot()
+```
 
 

@@ -2,11 +2,11 @@
 
 ## Contenido
 
-1. [Comparación entre grupos]
-2. [Análisis de correlación]
-3. [Análisis de regresión simple]
-4. [Análisis de regresión múltiple]
-5. [Análisis de regresión logística]
+1. [Comparación entre grupos](https://github.com/lecastaneda/Bioestadistica/blob/main/Practico5.md#1-comparaci%C3%B3n-entre-grupos)
+2. [Análisis de correlación](https://github.com/lecastaneda/Bioestadistica/blob/main/Practico5.md#2-an%C3%A1lisis-de-correlaci%C3%B3n)
+3. [Análisis de regresión simple](https://github.com/lecastaneda/Bioestadistica/blob/main/Practico5.md#3-an%C3%A1lisis-de-regresi%C3%B3n-simple)
+4. [Análisis de regresión múltiple](https://github.com/lecastaneda/Bioestadistica/blob/main/Practico5.md#4-an%C3%A1lisis-de-regresi%C3%B3n-m%C3%BAliple)
+5. [Análisis de regresión logística](https://github.com/lecastaneda/Bioestadistica/blob/main/Practico5.md#4-an%C3%A1lisis-de-regresi%C3%B3n-log%C3%ADstica)
 
 ---
 ### 1. Comparación entre grupos

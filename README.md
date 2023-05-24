@@ -18,7 +18,7 @@ Además recomendamos la utilización de [RStudio](https://www.rstudio.com/produc
 4. [Práctico 4: comparación de múltiples grupos II](https://github.com/lecastaneda/Bioestadistica/blob/main/Practico4.md)
 5. [Práctico 5: relación entre variables]
 6. [Práctico 6: análisis multivariado I](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico6.md)
-7. [Práctico 7: análisis multivariado II](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico5.md)
+7. [Práctico 7: análisis multivariado II](https://github.com/lecastaneda/Bioestadistica/blob/main/Practico7.md)
 
 
 ---

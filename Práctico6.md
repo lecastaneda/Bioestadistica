@@ -1,4 +1,4 @@
-# Práctico 5: Análisis multivariado (parte I)
+# Práctico 6: Análisis multivariado (parte I)
 
 En este realizaremos diversos análisis multivariados en R. Primero realizaremos un análisis multivariado de varianza (MANOVA) y luego un análisis de componentes principales (PCA):
 

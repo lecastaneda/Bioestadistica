@@ -14,9 +14,10 @@ Además recomendamos la utilización de [RStudio](https://www.rstudio.com/produc
 # Contenidos prácticos del curso
 1. [Introducción a R](https://github.com/lecastaneda/Bioestadistica/blob/main/Intro_R.R)
 2. [Práctico 1: análisis de frecuencia](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico%201.md)
-3. [Práctico 3: comparación de múltiples grupos](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico2.md)
-4. [Práctico 5: análisis multivariado I](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico5.md)
-5. [Práctico 6: análisis multivariado II](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico5.md)
+3. [Práctico 3: comparación de múltiples grupos I](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico3.md)
+4. [Práctico 4: comparación de múltiples grupos II](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico2.md)
+5. [Práctico 5: análisis multivariado I](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico5.md)
+6. [Práctico 6: análisis multivariado II](https://github.com/lecastaneda/Bioestadistica/blob/main/Pr%C3%A1ctico5.md)
 
 
 ---

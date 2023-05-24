@@ -69,7 +69,7 @@ summary(m1)
 ---
 ### 2. Análisis de correlación
 
-Ahora vamos a anlaizar las correlaciones entre los distintos valores de tacrolimus plasmáticos y los valores calculados de AUC. 
+Ahora vamos a analizar las correlaciones entre los distintos valores de tacrolimus plasmáticos y los valores calculados de AUC. 
 Por ejemplo, primeros analizaremos al correlación entre C0 y AUC.
 ```
 # Probamos al normalidad entre ambas variables
@@ -121,5 +121,132 @@ Grafiquemos la matriz de correlación
 ```
 cor.mat %>% pull_lower_triangle() %>% cor_plot()
 ```
+
+---
+### 3. Análisis de regresión simple
+
+Ahora vamos a analizar si los valores plasmáticos de tacrolimus permiten determinar los valores de AUC. Para esto analizaremos el mejor valor predctivo.
+Primero analizaremos la relación entre C0 y AUC.
+```
+m2 <- lm(AUC ~ C0, data=tac)
+anova(m2)
+summary(m2)
+```
+
+Ahora analizaremos la relación entre C12 y AUC.
+```
+m3 <- lm(AUC ~ C12, data=tac)
+summary(m3)
+```
+
+Grafiquemos la relación entre C12 y AUC.
+```
+plot(tac$C12,tac$AUC, las=1, pch=21, bg= "purple", 
+     xlab="TAC C12 (ng/ml)", ylab=("AUC (ng/ml/h)"),
+     cex=1.2)
+abline(m3, lwd=2, col="blue")
+```
+
+---
+### 4. Análisis de regresión múliple
+
+Ahora vamos a realizar una regresión múltiple solo con las primeros cuatro muestras para determinar su relación con la AUC calculada. Esto tiene un efecto práctico, ya que buscaremos qué muestra temporal de tacrolimus permite predecir de mejor manera la AUC, evitando la permenencia de los paciente por más de 4 horas en el centro de salud.
+
+```
+m4 <- lm(AUC ~ C0+C1+C2+C4, data=tac)
+summary(m4)
+```
+
+Ahora corremos otros modelos que tienen un tres muestras temporales.
+```
+# Primero corremos los modelos
+m5 <- lm(AUC ~ C0+C1+C2, data=tac)
+m6 <- lm(AUC ~ C0+C1+C4, data=tac)
+m7 <- lm(AUC ~ C0+C2+C4, data=tac)
+m8 <- lm(AUC ~ C1+C2+C4, data=tac)
+```
+
+Podemos comparar estos modelos estos modelos basándonos en los valores ajustados de r^2
+```
+summary(m4)$adj.r.squared
+summary(m5)$adj.r.squared
+summary(m7)$adj.r.squared
+summary(m7)$adj.r.squared
+summary(m8)$adj.r.squared
+```
+
+También podemos comparar estos modelos estos modelos basándonos en los valores de AIC.
+```
+AIC(m4)
+AIC(m5)
+AIC(m6)
+AIC(m7)
+AIC(m8)
+```
+
+Finalmente, podemos hacer una comparación global entre estos modelos, comparando sus desempeños estadísticos
+```
+library(performance)
+comp <- compare_performance(m4,m5,m6,m7,m8, rank=TRUE)
+comp
+```
+
+---
+### 4. Análisis de regresión logística
+
+Descargar los datos contenidos en el archivo csv [diabetes](https://github.com/lecastaneda/Bioestadistica/blob/main/diabetes.csv)
+
+Este set de datos pertence al Instituto Nacional de Diabetes y Enfermedades Digestivas y Renales. El objetivo de este set de datos es predecir si un paciente tiene o no diabetes basándose en ciertas mediciones diagnósticas como por ejemplo: niveles de glucosa, presión sanguínea, grosor de la piel, número de embarazos, niveles de insulina, índice de masa corporal, historia familiar de diabetes y edad. Todas las pacientes son mujeres mayores de 21 años pertenecientes al grupo indígena Pima.
+
+Nuevamente, lo primero es cargar el set de datos y revisar su estructura.
+```
+pima <- read.csv("diabetes.csv")
+head(pima)
+```
+
+Revisamos la correlación entre todas las variables.
+```
+cor.pima <- pima %>% cor_mat()
+cor.pima %>% pull_lower_triangle() %>% cor_plot()
+```
+
+Corremos una regresión logística simple entre el estado de diabetes y los niveles de glucosa.
+```
+m9 <- glm(Outcome ~ Glucose, data=pima, family=binomial)
+summary(m9)
+```
+
+Grafiquemos esta regresión
+```
+plot(pima$Glucose, pima$Outcome, 
+     xlab = "Glucosa (mg/dl)", ylab = "Diabetes (0= No diabetes, 1= Diabetes", pch = 20, col = "blue")
+#
+# Calcular las probabilidades predichas
+probs <- predict(m9, newdata = pima, type = "response")
+
+# Agregar las probabilidades predichas a la gráfica
+lines(sort(pima$Glucose), probs[order(pima$Glucose)], col = "red", lwd = 2)
+```
+
+Ahora corremos una regresión logística múltiple incluyendo el número de embarazos.
+```
+m10 <- glm(Outcome ~ Glucose+Pregnancies, data=pima, family=binomial)
+summary(m10)
+```
+
+Comparamos ambos modelos basándonos en el AIC. ¿Cuál es mejor modelo?
+```
+AIC(m9)
+AIC(m10)
+```
+
+Ahora corremos una regresión logística con todas las posibles. variables predictoras de diabetes.
+```
+m11 <- glm(Outcome ~ ., data=pima, family=binomial)
+summary(m11)
+```
+
+
+
 
 

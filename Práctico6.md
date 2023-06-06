@@ -186,13 +186,13 @@ legend(2.5,-2, c("Catanli","Huillilemu","LasPalmas","Neltume","Pelchuquín"), bt
 Análicemos cómo varía PC1 entre los distintos sitios
 
 ```
-data$PC1 <- PC1   # Agregar la variable PC1 al dataset "data"
-shapiro.test(data$PC1)  # Prubea de normalidad
-ggqqplot(data$PC1)
-leveneTest(data$PC1 ~ data$site)  # Prueba de homocedasticidad
+data1$PC1 <- PC1   # Agregar la variable PC1 al dataset "data"
+shapiro.test(data1$PC1)  # Prubea de normalidad
+ggqqplot(data1$PC1)
+leveneTest(data1$PC1 ~ data1$site)  # Prueba de homocedasticidad
 #
 ## ANOVA usando el PC1
-test3 <- aov(PC1 ~ site, data=data)
+test3 <- aov(PC1 ~ site, data=data1)
 anova(test3)    # Resultado
 TukeyHSD(test3) # Comparación a posteriori
 ```
@@ -200,11 +200,11 @@ TukeyHSD(test3) # Comparación a posteriori
 Grafiquemos!
 
 ```
-ggboxplot(data, x="site", y="PC1", col="black", ylab="PC1", xlab="Sitios", add="jitter")
+ggboxplot(data1, x="site", y="PC1", col="black", ylab="PC1", xlab="Sitios", add="jitter")
 #
 ## Reordenar grupos, graficar y agregar símbolos de significancia
-data$site <- factor(data$site, levels=c("LasPalmas","Pelchuquin","Neltume","Catanli","Huillilemu"))
-plot2 <- ggboxplot(data, x="site", y="PC1", col="black", ylab="PC1", xlab="Sitios", add="jitter")
+data1$site <- factor(data1$site, levels=c("LasPalmas","Pelchuquin","Neltume","Catanli","Huillilemu"))
+plot2 <- ggboxplot(data1, x="site", y="PC1", col="black", ylab="PC1", xlab="Sitios", add="jitter")
 plot2
 plot2 + stat_pvalue_manual(tukey.test,label="p.adj.signif",tip.length = 0.02, 
                             y.position=c(NA,NA,4.8,5.4,NA,3.6,4.2,NA,NA,NA))
